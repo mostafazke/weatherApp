@@ -30,7 +30,7 @@ setInterval(function() {
 time.click(function() {
     time.text(time.text() == moment().format("HH:mm") ? moment().format("h:mm") : moment().format("HH:mm"));
 });
-    $.getJSON('https://ipinfo.io', function(data){
+    $.getJSON('http://ipinfo.io', function(data){
         lat = data.loc.split(",")[0];
         lon = data.loc.split(",")[1];
         $.getJSON(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=f19ab83aa06dc74d66a49829fd97cc72`, function(data){
