@@ -1,0 +1,154 @@
+/* Start Global */
+
+
+/*
+@font-face {
+    font-family: Cocon;
+    src: url(../fonts/CoconNextArabicLight.woff) format('woff');
+}*/
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    transition: all 1s ease-in-out
+}
+
+body {
+    font-family: tahoma;
+    color: #fff;
+    background-image: url('../img/clear sky-min.JPG');
+    background-size: cover
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.clear {
+    clear: both;
+}
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+
+button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+}
+
+
+/* End Global */
+
+.window {
+    height: 100vh;
+    background: rgba(0,0,0,.5);
+    font-size: 1rem;
+}
+.window .time {
+    float: left;
+    width: 75%;
+    font-size: 2rem;
+}
+
+
+
+.window .time button {
+    width: 80px;
+    text-align: right;
+}
+
+.moon {
+    position: relative;
+    font-size: 2.5rem;
+    float: right;
+    cursor: pointer
+}
+
+.moon:after {
+    content: 'Moon';
+    position: absolute;
+    top: 100%;
+    left: -50%;
+    opacity: 0;
+    background-color: #333;
+    font-size: .7rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: opacity .5s ease-in-out;
+}
+
+.moon:hover:after {
+    opacity: 1;
+}
+.window .wether {
+    font-size: 3.5rem;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center
+}
+
+.window .wether #error {
+    font-size: 1.5rem;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+    text-align: center;
+    border-radius: 10px;
+    display: none
+}
+
+.window .wether h1 {
+    margin: 0
+}
+
+.window .wether h3 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.window .wether button {
+    font-size: 3rem;
+        width: 12%
+}
+.window .wether #desc {
+    text-transform: capitalize;
+    margin-top: 20px 
+}
+.window .date {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.window .date h2,
+.window .date h3 {
+    margin: 0
+}
+
+.window .date h2 {
+    font-size: 1.6em
+}
