@@ -1,5 +1,5 @@
 // Variables
-var	time = $("#time"),
+var time = $("#time"),
     clock = $("#clock"),
     city = $("#city"),
     moon = $("#moon"),
@@ -9,8 +9,11 @@ var	time = $("#time"),
     desc = $("#desc"),
     day = $("#day"),
     date = $("#date"),
+    appid,
     lat,
     lon,
+    unit,
+    q,
     iconID,
     dayCon,
     fahrenheit,
@@ -19,29 +22,72 @@ var	time = $("#time"),
     night,
     background;
 // Ready
-$(function() {
+$(function () {
     day.text(moment().format('dddd'));
     date.text(moment().format("MMMM, D"));
     moon.addClass(moonArr[moment().format("iD") - 1]);
-setInterval(function() {
-    time.text(time.text() == moment().format("HH:mm") ? moment().format("HH:mm") : moment().format("h:mm"));
-    clock.addClass(clockArr[moment().format("h") - 1]);
-}, 500);
-time.click(function() {
-    time.text(time.text() == moment().format("HH:mm") ? moment().format("h:mm") : moment().format("HH:mm"));
-});
-    $.getJSON('http://ipinfo.io', function(data){
-        lat = data.loc.split(",")[0];
-        lon = data.loc.split(",")[1];
-        $.getJSON(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=f19ab83aa06dc74d66a49829fd97cc72`, function(data){
+    setInterval(function () {
+        time.text(time.text() === moment().format("HH:mm") ? moment().format("HH:mm") : moment().format("h:mm"));
+        clock.addClass(clockArr[moment().format("h") - 1]);
+    }, 500);
+    time.click(function () {
+        time.text(time.text() === moment().format("HH:mm") ? moment().format("h:mm") : moment().format("HH:mm"));
+    });
+    $.getJSON('https://crossorigin.me/https://ipinfo.io', function (data) {
+        lat = 'lat=' + data.loc.split(",")[0];
+        lon = '&lon=' + data.loc.split(",")[1];
+        unit = '&units=imperial';
+        appid = '&appid=f19ab83aa06dc74d66a49829fd97cc72';
+        q = lat + lon + unit + appid;
+        $.getJSON(`https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?${q}`, function (data) {
+            fetchData(data);
+            setTimeout(function () {
+                $('.msg').fadeIn('slow').fadeOut(5000);
+            }, 3000);
+        });
+
+        city.click(function () {
+            $('<input id="city-name" type="text" />').insertAfter(city).focus();
+            $(this).hide();
+        });
+        $('body').on('keyup', 'input', function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != '' && /^[a-zA-Z- ]*$/.test($(this).val()) == true) {
+                    city.show().text($(this).val());
+                    q = 'q=' + $(this).val() + unit + appid;
+                    $.getJSON(`https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?${q}`, function (data) {
+                        deg.click(function () {
+                            if (deg.children().last().hasClass("wi-fahrenheit")) {
+                                deg.children().last().removeClass("wi-fahrenheit");
+                                deg.children().last().addClass("wi-celsius");
+                                temp.text(celsius);
+                            } else {
+                                deg.children().last().removeClass("wi-celsius");
+                                deg.children().last().addClass("wi-fahrenheit");
+                                temp.text(fahrenheit);
+                            }
+                        });
+                        fetchData(data);
+                    });
+                } else {
+                    city.show();
+                }
+                $(this).hide();
+            }
+        });
+
+
+        function fetchData(data) {
             city.text(data.name);
             temp.text(Math.round(data.main.temp));
+            deg.children().last().removeClass("wi-celsius");
+            deg.children().last().addClass("wi-fahrenheit");
             desc.text(data.weather[0].description);
             iconID = data.weather[0].icon;
             dayCon = iconID.charAt(iconID.length - 1);
             fahrenheit = Math.round(data.main.temp);
-            celsius = Math.round((fahrenheit - 32) * (5/9));
-            deg.click(function(){
+            celsius = Math.round((fahrenheit - 32) * (5 / 9));
+            deg.click(function () {
                 if (deg.children().last().hasClass("wi-fahrenheit")) {
                     deg.children().last().removeClass("wi-fahrenheit");
                     deg.children().last().addClass("wi-celsius");
@@ -51,59 +97,59 @@ time.click(function() {
                     deg.children().last().addClass("wi-fahrenheit");
                     temp.text(fahrenheit);
                 }
-            }); 
-switch (iconID.substr(0,2)) {
-case '01':
-    day = 'wi-day-sunny';
-    night = 'wi-night-clear';
-    background = 'clear sky-min.JPG';
-    break;
-case '02':
-    day = 'wi-day-cloudy';
-    night = 'wi-night-cloudy';
-    background = 'few clouds-min.JPG';
-    break;
-case '03':
-    day = 'wi-day-cloudy-high';
-    night = 'wi-night-cloudy-high';
-    background = 'scattered clouds-min.jpg';
-    break;
-case '04':
-    day = 'wi-day-lightning';
-    night = 'wi-night-lightning';
-    background = 'broken clouds-min.jpg';
-    break;
-case '09':
-    day = 'wi-day-hail';
-    night = 'wi-night-hail';
-    background = 'shower rain-min.jpg';
-    break;
-case '10':
-    day = 'wi-day-rain';
-    night = 'wi-night-rain';
-    background = 'rain-min.JPG';
-    break;
-case '11':
-    day = 'wi-day-thunderstorm';
-    night = 'wi-night-thunderstorm';
-    background = 'thunderstorm-min.png';
-    break;
-case '13':
-    day = 'wi-day-snow';
-    night = 'wi-night-snow';
-    background = 'snow-min.jpeg';
-    break;
-case '50':
-    day = 'wi-day-windy';
-    night = 'wi-night-cloudy-windy';
-    background = 'mist-min.jpg';
-    break;
-default:
-    day = 'wi-day-sunny';
-    night = 'wi-night-clear';
-    background = 'clear sky-min.JPG';
-}
- $('body').css('backgroundImage', "url('img/"+background+"')");
+            });
+            switch (iconID.substr(0, 2)) {
+                case '01':
+                    day = 'wi-day-sunny';
+                    night = 'wi-night-clear';
+                    background = 'clear sky-min.JPG';
+                    break;
+                case '02':
+                    day = 'wi-day-cloudy';
+                    night = 'wi-night-cloudy';
+                    background = 'few clouds-min.JPG';
+                    break;
+                case '03':
+                    day = 'wi-day-cloudy-high';
+                    night = 'wi-night-cloudy-high';
+                    background = 'scattered clouds-min.jpg';
+                    break;
+                case '04':
+                    day = 'wi-day-lightning';
+                    night = 'wi-night-lightning';
+                    background = 'broken clouds-min.jpg';
+                    break;
+                case '09':
+                    day = 'wi-day-hail';
+                    night = 'wi-night-hail';
+                    background = 'shower rain-min.jpg';
+                    break;
+                case '10':
+                    day = 'wi-day-rain';
+                    night = 'wi-night-rain';
+                    background = 'rain-min.JPG';
+                    break;
+                case '11':
+                    day = 'wi-day-thunderstorm';
+                    night = 'wi-night-thunderstorm';
+                    background = 'thunderstorm-min.png';
+                    break;
+                case '13':
+                    day = 'wi-day-snow';
+                    night = 'wi-night-snow';
+                    background = 'snow-min.jpeg';
+                    break;
+                case '50':
+                    day = 'wi-day-windy';
+                    night = 'wi-night-cloudy-windy';
+                    background = 'mist-min.jpg';
+                    break;
+                default:
+                    day = 'wi-day-sunny';
+                    night = 'wi-night-clear';
+                    background = 'clear sky-min.JPG';
+            }
+            $('body').css('backgroundImage', "url('img/" + background + "')");
             if (dayCon === 'd') {
                 icon.removeClass('wi-day-sunny');
                 icon.addClass(day);
@@ -111,7 +157,7 @@ default:
                 icon.removeClass('wi-day-sunny');
                 icon.addClass(night);
             }
-        });
+        };
     });
 });
 /*
