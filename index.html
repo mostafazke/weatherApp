@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <title>✨ Weather</title>
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/weather-icons.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
-</head>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>✨ Weather</title>
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="css/weather-icons.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
 <!--
   _   _      _ _         _                      _   _  __       _ _
  | | | | ___| | | ___   | |__   ___  __ _ _   _| |_(_)/ _|_   _| | |
@@ -15,36 +15,31 @@
  |  _  |  __/ | | (_) | | |_) |  __/ (_| | |_| | |_| |  _| |_| | |_|
  |_| |_|\___|_|_|\___/  |_.__/ \___|\__,_|\__,_|\__|_|_|  \__,_|_(_)
  -->
-
-<body>
-    <section class="window">
-        <div class="container">
-            <div class="top">
+    <body>
+        <main class="window">
+            <section class="top">
                 <div class="time">
                     <i id="clock" class="wi"></i>
-                    <button id="time"></button>
+                    <button id="time">5:17</button>
+                    <h2 id="city">London</h2>
+                    <span class="msg">Click &#8657; to search for your city</span>
                 </div>
                 <div class="moon">
                     <i id="moon" class="wi"></i>
-                </div>
-                <div class="clear"></div>
-                <h2 id="city">London</h2>
-            </div>
-            <div class="wether">
-                <span id="error"></span>
+                </div>                
+            </section>
+            <section class="wether">
                 <h1><i id="icon" class="wi wi-day-sunny"></i> <button id="deg"><span id="temp">91</span><i class="wi wi-fahrenheit"></i></button></h1>
-                <h3 id="desc">Wait...</h3>
-            </div>
-            <div class="date">
-                <h2 id="day"></h2>
-                <h3 id="date"></h3>
-            </div>
-        </div>
-    </section>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="js/moment-hijri.js"></script>
-    <script src="js/script.js"></script>
-</body>
-
+                <h2 id="desc">Wait...</h2>
+            </section>
+            <section class="date">
+                <h2 id="day">Tuesday</h2>
+                <h3 id="date">April, 18</h3>
+            </section>
+        </main>
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/moment.min.js"></script>
+        <script src="js/moment-hijri.js"></script>
+        <script src="js/script.js"></script>
+    </body>
 </html>
