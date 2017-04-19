@@ -39,7 +39,7 @@ $(function () {
         unit = '&units=imperial';
         appid = '&appid=f19ab83aa06dc74d66a49829fd97cc72';
         q = lat + lon + unit + appid;
-        $.getJSON(`https://jsonp.afeld.me/?url=http://api.openweathermap.org/data/2.5/weather?${q}`, function (data) {
+        $.getJSON(`http://api.openweathermap.org/data/2.5/weather?${q}`, function (data) {
             fetchData(data);
             setTimeout(function () {
                 $('.msg').fadeIn('slow').fadeOut(5000);
@@ -55,7 +55,7 @@ $(function () {
                 if ($(this).val() != '' && /^[a-zA-Z- ]*$/.test($(this).val()) == true) {
                     city.show().text($(this).val());
                     q = 'q=' + $(this).val() + unit + appid;
-                    $.getJSON(`https://jsonp.afeld.me/?url=http://api.openweathermap.org/data/2.5/weather?${q}`, function (data) {
+                    $.getJSON(`http://api.openweathermap.org/data/2.5/weather?${q}`, function (data) {
                         deg.click(function () {
                             if (deg.children().last().hasClass("wi-fahrenheit")) {
                                 deg.children().last().removeClass("wi-fahrenheit");
